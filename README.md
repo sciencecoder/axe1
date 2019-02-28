@@ -1,4 +1,4 @@
-This is a simple Nodejs, Expressjs, mongoDB, mongoose js, and Reactjs applicationI created as a part of freecodecamp's microservice project  curriculum.
+This is a simple Nodejs, Expressjs, mongoDB, mongoose js, and Reactjs application I created as a part of freecodecamp's microservice project  curriculum.
 
 User Stories
 I can create a user by posting form data username to /api/exercise/new-user and returned will be an object with username and _id.
