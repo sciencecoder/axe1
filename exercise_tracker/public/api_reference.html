@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
+    integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA"
+    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+   
+    <title>API Reference</title>
+  </head>
+  <body>
+      
+      <div class="container mt-5">
+        <h4>This is the API reference for my simple tracking app.</h4>
+        <div class="container">
+          <div class="col-sm-12">
+            You can POST new users like this: 
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/new-user</code>
+            POST data should be JSON object like this:
+            <code>
+              {
+              "username": "String"
+              }
+            </code>
+            response on Success will be a mongoDB object with the user data:
+            <code>{
+    "_id" "5c747539109f5209556516bd",
+    "exercises": [],
+    "username": "John",
+    "__v": 0
+}</code>
+on failure : 
+<code>{error: "Error message"}</code>
+<br>
+         For adding user data (an exercise) to an existing user, POST to: <br>
+         <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/add</code>
+         <br>
+         POST data should be JSON object like this:
+            <code>
+              {
+              "userId": "mongodb _id",
+              "desc": "Description"
+              "duration": NUMBER,
+              "date": mm-dd-yyyy
+              }
+            </code>
+            success response gives you an object: 
+            <code>{message: "Added user successfully"}</code>
+            <br>
+            failure,
+            <code>{error: "error message"}</code>
+            <br>
+            to GET user data(exercises for a user) access endpoint: 
+            <br>
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/log?{userId}&{limit}&{from}</code>
+            where userId(mongodb _id) is required, and limit(# of exercise results) and from(results date starting from mm-dd-yyyy) are optional
+            
+             <br>
+            to GET complete user data users access endpoint: 
+            <br>
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/log?{userId}&{limit}&{from}</code>
+            where user(mongodb _id OR username) is optional
+            <br>
+            github repo link: 
+          </div>
+        </div>
+      </div>
+  </body>
+  </html>
