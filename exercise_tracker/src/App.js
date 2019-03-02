@@ -142,9 +142,8 @@ class NewExercise extends Component {
     this.state={
       form_data: {
         userId: "",
-        desc: "",
-        duration: 0,
-        date: new Date()
+        description: "",
+        duration: 0
       }
     }
   }
@@ -156,11 +155,10 @@ class NewExercise extends Component {
       this.setState({
         form_data: {
         userId: "",
-        desc: "",
-        duration: 0,
-        date: new Date()
+        description: "",
+        duration: 0
       },
-      res_message: res.error ? res.error : "Added ecercise Successfully!"
+      res_message: res.error ? res.error : "Added exercise Successfully!"
       });
       console.log("Posted exercise, response: ", res);
     });
@@ -188,8 +186,8 @@ class NewExercise extends Component {
     <div className="col-sm-12">
       <h5 className="col-sm-12 text-center col-form-label">Description</h5>
       <input type="text" name="description" className="form-control"
-       value={this.state.form_data.desc}
-      onChange={this.handleInputChange.bind(this, "desc")}
+       value={this.state.form_data.description}
+      onChange={this.handleInputChange.bind(this, "description")}
       />
     </div>
     <div className="col-sm-12">
@@ -201,7 +199,8 @@ class NewExercise extends Component {
     </div>
     <div className="col-sm-12">
       <h5 className="col-sm-12 text-center col-form-label">Date</h5>
-      <input type="date" name="date" className="form-control" 
+      <input type="text" name="date" className="form-control" 
+       placeholder="yyyy-mm-dd"
        value={this.state.form_data.date}
       onChange={this.handleInputChange.bind(this, "date")}
       />
@@ -251,7 +250,7 @@ class Search extends Component {
       search_data: {
         userId: "",
         limit: 0,
-        date: new Date("01/01/1970")
+        date: "1970-01-01"
       },
       res: {}
     }
@@ -312,8 +311,9 @@ class Search extends Component {
    
     
     <div className="col-sm-6">
-        <label><h6>Filter by Date (choose date)</h6></label>
-        <input type="date" className="form-control" id="search_date" placeholder="Filter by date"
+        <label><h6>Filter by Date (choose date) created starting from: </h6></label>
+        <input type="text" className="form-control" id="search_date" placeholder="Filter by date"
+          placeholder="format: yyyy-mm-dd"
           value={this.state.search_data.date} 
           onChange={this.handleInputChange.bind(this, "date")}
         />
@@ -340,6 +340,69 @@ const RouteWrapper = function(props) {
         return props.children || "";
     
 };
+function api_reference() {
+  return (
+      <div class="container mt-5">
+        <h4>This is the API reference for my simple tracking app.</h4>
+        <div class="container">
+          <div class="col-sm-12">
+            You can POST new users like this: 
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/new-user</code>
+            POST data should be JSON object like this:
+            <code>
+              {
+              `{
+              "username": "String"
+              }`
+                
+              }
+            </code>
+            response on Success will be a mongoDB object with the user data:
+            <code>{`{
+    "_id" "5c747539109f5209556516bd",
+    "exercises": [],
+    "username": "John",
+    "__v": 0
+}`}</code>
+on failure : 
+<code>{`{error: "Error message"}`}</code>
+<br/>
+         For adding user data (an exercise) to an existing user, POST to: <br/>
+         <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/add</code>
+         <br/>
+         POST data should be JSON object like this:
+            <code>
+             {`{
+              "userId": "mongodb _id",
+              "desc": "Description"
+              "duration": NUMBER,
+              "date": mm-dd-yyyy
+              }`
+             }
+            </code>
+            success response gives you an object: 
+            <code>{`{message: "Added user successfully"}`}</code>
+            <br/>
+            failure,
+            <code>{`{error: "error message"}`}</code>
+            <br/>
+            to GET user data(exercises for a user) access endpoint: 
+            <br/>
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/log?{`{userId}&{limit}&{from}`}</code>
+            where userId(mongodb _id) is required, and limit(# of exercise results) and from(results date starting from mm-dd-yyyy) are optional
+            
+             <br/>
+            to GET complete user data users access endpoint: 
+            <br/>
+            <code>https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise/log?{`{userId}&{limit}&{from}`}</code>
+            where user(mongodb _id OR username) is optional
+            <br/>
+            github repo link: 
+          </div>
+        </div>
+      </div>
+    )
+}
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -369,6 +432,7 @@ class App extends Component {
         <Route exact path="/new_user" component={SignUpForm}/>
         <Route exact path="/search_data" component={Search}/>
         <Route exact path="/add_exercise" component={NewExercise} />
+        <Route exact path="/api_reference" component={api_reference} />
        </div>
      </Router>
      );

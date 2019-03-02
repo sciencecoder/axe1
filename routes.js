@@ -52,9 +52,9 @@ router.post("/add", function(req, res) {
      if(err) console.error(err);
      if(user) {
       let new_exercise = {
-      description: req.body.desc || "",
+      description: req.body.description || "",
       duration: req.body.duration || 0,
-      date: req.body.date || new Date(),
+      date: new Date(req.body.date) || new Date(),
       }
       models.User.updateOne({_id: req.body.userId},
       {$push: {exercises: new_exercise}},
@@ -82,9 +82,10 @@ router.get("/log", function(req, res) {
     //apply limit(Int) and from (Date) query params
   
     if(user) {
+      
       user.exercises = user.exercises
-      .slice(0, ((queries.limit && queries.limit > 0) ? queries.limit : false) || user.exercises.length)
-      .filter((obj, i) => queries.from ? obj.date.getTime() >= queries.from.getTime() : true);
+      .slice(0, ((queries.limit && parseInt(queries.limit) > 0) ? parseInt(queries.limit) : false) || user.exercises.length)
+      .filter((obj, i) => queries.from ? obj.date.getTime() >= new Date(queries.from).getTime() : true);
       
       res.send(user);
       console.log("Filtered documents", user);
