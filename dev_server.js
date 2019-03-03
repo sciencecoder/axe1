@@ -4,9 +4,12 @@ const api_routes = require("./routes.js");
 var cors = require("cors");
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 8080;
+//when running the dev api server,set process.env.PORT to 8081 
+//because webpack runs react on the default port,  8080
+//to set port, run terminal command: export env PORT=8081 PORT
+const port = 8081;
 //console.log(process.env.DB_CONN)
-//console.log(process.env.NODE_ENV)
+
 app.use(cors());
 
 /*app.use(function(req, res, next) {
@@ -20,8 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //app.use(express.static('./excersize_tracker/public'))
 app.listen(port, () => console.log(`Listening on port ${port}`));
-app.use(express.static(path.join(__dirname, 'exercise_tracker/build')));
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
 app.use("/api/exercise", api_routes)

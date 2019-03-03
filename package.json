@@ -14,10 +14,13 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd ./exercise_tracker && npm run start",
-    "server": "node server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "author": "",
-    "license": "ISC"
-  }
+    "client_dev": "cd ./exercise_tracker && npm run start",
+    "server_dev": "export env NODE_ENV=development && node dev_server.js",
+    "production": "export env NODE_ENV=production && node server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server_dev\" \"npm run client_dev\"",
+    "build": "cd ./exercise_tracker && npm run build",
+    "start": "npm run production"
+   },
+   "author": "",
+   "license": "ISC"
 }

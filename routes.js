@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var router = express.Router();
 var mongoose = require("mongoose");
 var models = require("./Models")
-mongoose.connect("mongodb://nur:jrxCiZu6SWD5vrX@ds044577.mlab.com:44577/deep_learning",
+mongoose.connect(process.env.DB_CONN,
 {useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

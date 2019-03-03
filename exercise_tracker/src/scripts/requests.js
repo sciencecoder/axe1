@@ -1,4 +1,4 @@
-const baseUrl = "https://excersize-tracker-captain-clark.c9users.io:8081/api/exercise"
+const baseUrl = `https://excersize-tracker-captain-clark.c9users.io:${process.env.NODE_ENV == "production" ? "" : 8081}/api/exercise`
 var requests = {
   post: function(path, data, callback) {
     // The parameters we are gonna pass to the fetch function
